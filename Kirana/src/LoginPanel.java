@@ -24,7 +24,7 @@ public class LoginPanel extends javax.swing.JFrame {
 
     public void LoginAccess()
     {
-         String sql="select * from Login where  UserName=? and UserPassword=?";
+         String sql="select * from userlogin where  username=? and userpassword=?";
         try
         {
             pas=con.prepareStatement(sql);
@@ -64,6 +64,7 @@ public class LoginPanel extends javax.swing.JFrame {
         initComponents();
         setResizable(false);
         con=DBConnection.getDBConnection();
+        LoginAccess();
     }
 
     /**^

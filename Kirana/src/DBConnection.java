@@ -11,7 +11,7 @@ public class DBConnection {
   OracleDataSource ods;
   ods=new OracleDataSource();
   ods.setURL("jdbc:oracle:thin:@localhost:1521:xe");
-  con=ods.getConnection("system","Duggu12345");
+  con=ods.getConnection("system","canacona");
 return con;
 }
     
