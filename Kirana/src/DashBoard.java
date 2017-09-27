@@ -1,14 +1,23 @@
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.channels.FileChannel;
+import java.nio.file.Files;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
+import javax.swing.JFileChooser;
 import javax.swing.Timer;
 
 public class DashBoard extends javax.swing.JFrame {
     ButtonGroup grp=new ButtonGroup();
-
+ButtonGroup grp1=new ButtonGroup();
     DashBoard(String text) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -37,9 +46,12 @@ public class DashBoard extends javax.swing.JFrame {
         initComponents();
         DateTimeSet();
         setResizable(false);
-                grp.add(RBOnline);
-        grp.add(jRadioButton2);
-        
+        grp.add(RBOnline);
+        grp.add(RBOffline);
+        grp1.add(RDaily);
+        grp1.add(RMonthly);
+        grp1.add(RFestival);
+        grp1.add(ROffer);
         
     }
 
@@ -53,12 +65,11 @@ public class DashBoard extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         DateTimelbl = new javax.swing.JLabel();
         RBOnline = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        RBOffline = new javax.swing.JRadioButton();
         jRadioButton6 = new javax.swing.JRadioButton();
         mainPanel = new javax.swing.JTabbedPane();
         upload = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
-        jFileChooser1 = new javax.swing.JFileChooser();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -70,13 +81,14 @@ public class DashBoard extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
         mail = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jRadioButton5 = new javax.swing.JRadioButton();
+        RDaily = new javax.swing.JRadioButton();
+        RMonthly = new javax.swing.JRadioButton();
+        RFestival = new javax.swing.JRadioButton();
+        ROffer = new javax.swing.JRadioButton();
         jButton2 = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         alert = new javax.swing.JTabbedPane();
@@ -208,8 +220,8 @@ public class DashBoard extends javax.swing.JFrame {
         RBOnline.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         RBOnline.setText("Online");
 
-        jRadioButton2.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
-        jRadioButton2.setText("Offline");
+        RBOffline.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        RBOffline.setText("Offline");
 
         jRadioButton6.setText("Alert");
 
@@ -221,7 +233,7 @@ public class DashBoard extends javax.swing.JFrame {
                 .addGap(17, 17, 17)
                 .addComponent(RBOnline)
                 .addGap(18, 18, 18)
-                .addComponent(jRadioButton2)
+                .addComponent(RBOffline)
                 .addGap(42, 42, 42)
                 .addComponent(jRadioButton6)
                 .addGap(38, 38, 38)
@@ -239,7 +251,7 @@ public class DashBoard extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
                         .addComponent(RBOnline)
-                        .addComponent(jRadioButton2)
+                        .addComponent(RBOffline)
                         .addComponent(jRadioButton6))))
         );
 
@@ -267,6 +279,13 @@ public class DashBoard extends javax.swing.JFrame {
 
         jLabel12.setText("* File format should be in .csv always");
 
+        jButton4.setText("Select .csv File");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -276,56 +295,52 @@ public class DashBoard extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel12)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 526, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(531, 531, 531)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(222, 222, 222)
+                        .addComponent(jButton4)
+                        .addGap(261, 261, 261)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel2))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(36, 36, 36)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel10)
-                                    .addComponent(jLabel11))))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel11))))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jFileChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(52, 52, 52)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel11)))
-                .addGap(18, 18, 18)
+                .addGap(52, 52, 52)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jButton4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel11)
+                .addGap(111, 111, 111)
                 .addComponent(jLabel12)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         upload.addTab("Choose a .csv file from below browser", jPanel2);
@@ -341,18 +356,23 @@ public class DashBoard extends javax.swing.JFrame {
             }
         });
 
-        jRadioButton1.setText("Daily Analysis");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+        RDaily.setText("Daily Analysis");
+        RDaily.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+                RDailyActionPerformed(evt);
             }
         });
 
-        jRadioButton3.setText("Monthly Analysis");
+        RMonthly.setText("Monthly Analysis");
+        RMonthly.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RMonthlyActionPerformed(evt);
+            }
+        });
 
-        jRadioButton4.setText("Festival Analysis");
+        RFestival.setText("Festival Analysis");
 
-        jRadioButton5.setText("Offer Analysis");
+        ROffer.setText("Offer Analysis");
 
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jButton2.setText("SEND MAIL");
@@ -373,16 +393,16 @@ public class DashBoard extends javax.swing.JFrame {
                 .addGap(65, 65, 65)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jRadioButton1)
+                        .addComponent(RDaily)
                         .addGap(102, 102, 102)
-                        .addComponent(jRadioButton3))
+                        .addComponent(RMonthly))
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(107, 107, 107)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jRadioButton4)
+                        .addComponent(RFestival)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
-                        .addComponent(jRadioButton5)
+                        .addComponent(ROffer)
                         .addGap(46, 46, 46))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -397,10 +417,10 @@ public class DashBoard extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(91, 91, 91)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton3)
-                    .addComponent(jRadioButton4)
-                    .addComponent(jRadioButton5))
+                    .addComponent(RDaily)
+                    .addComponent(RMonthly)
+                    .addComponent(RFestival)
+                    .addComponent(ROffer))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 221, Short.MAX_VALUE)
                 .addComponent(jLabel13)
                 .addGap(45, 45, 45)
@@ -1218,9 +1238,9 @@ public class DashBoard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void RDailyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RDailyActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+    }//GEN-LAST:event_RDailyActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -1242,6 +1262,30 @@ public class DashBoard extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField5ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+JFileChooser chooser=new JFileChooser();
+chooser.showOpenDialog(null);
+File f=chooser.getSelectedFile();
+String filename=f.getAbsolutePath();
+//System.out.println(filename);
+  File source = new File(filename);
+    File dest = new File("c:/");
+
+
+       // try {
+       //     Files.copy(source.toPath(), dest.toPath());
+            
+            
+// TODO add your handling code here:
+     //   } catch (IOException ex) {
+      //      Logger.getLogger(DashBoard.class.getName()).log(Level.SEVERE, null, ex);
+      //  }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void RMonthlyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RMonthlyActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_RMonthlyActionPerformed
+
     public static void main(String args[]) {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -1253,7 +1297,12 @@ public class DashBoard extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel DateTimelbl;
+    private javax.swing.JRadioButton RBOffline;
     private javax.swing.JRadioButton RBOnline;
+    private javax.swing.JRadioButton RDaily;
+    private javax.swing.JRadioButton RFestival;
+    private javax.swing.JRadioButton RMonthly;
+    private javax.swing.JRadioButton ROffer;
     private javax.swing.JTabbedPane alert;
     private javax.swing.JTabbedPane dashboard;
     private javax.swing.JTextArea f;
@@ -1261,8 +1310,8 @@ public class DashBoard extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JDialog jDialog1;
-    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1363,11 +1412,6 @@ public class DashBoard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JRadioButton jRadioButton5;
     private javax.swing.JRadioButton jRadioButton6;
     private javax.swing.JRadioButton jRadioButton7;
     private javax.swing.JRadioButton jRadioButton8;
